@@ -1,8 +1,13 @@
+const path = require("path");
+const fs = require("fs");
 const jwt = require("jsonwebtoken");
 const Teacher = require("../models/teacherModel");
 
+const uploadsDir = path.join(__dirname, "..", "uploads");
+
 exports.uploadFile = async (req, res) => {
   try {
+    console.log("req.file", req.file, "req.files", req.files);
     if (!req.file) {
       return res.status(400).json({ message: "No file uploaded" });
     }
@@ -103,7 +108,7 @@ exports.loginTeacher = async (req, res) => {
         message: "Invalid password",
       });
     }
- const jwt = require("jsonwebtoken");
+//  const jwt = require("jsonwebtoken");
 
 const token = jwt.sign(
   {
@@ -115,10 +120,7 @@ const token = jwt.sign(
     expiresIn: "1h"
   }
 );
-
     
-  
-
     res.json({
       message: "Login successful",
       teacher,
@@ -139,8 +141,9 @@ exports.logoutTeacher = async (req, res) => {
     res.setHeader("Content-Type", "application/pdf");
   }
 };
-exports.uploadFile = async (req, res) => {
+exports.uploadFiles = async (req, res) => {
   try {
+    console.log("req.file", req.file, "req.files", req.files);
     if (!req.files || req.files.length === 0) {
       return res.status(400).json({ message: "No files uploaded" });
     }
@@ -155,4 +158,27 @@ exports.uploadFile = async (req, res) => {
   } catch (error) {
     res.status(500).json(error);
   }
+};
+exports.downloadFile = (req, res) => {
+  const fileName = req.params.filename;
+  const filePath = path.join(uploadsDir, fileName);
+  const relativeToUploads = path.relative(uploadsDir, path.resolve(filePath));
+
+  if (
+    relativeToUploads.startsWith("..") ||
+    path.isAbsolute(relativeToUploads) ||
+    relativeToUploads === ""
+  ) {
+    return res.status(400).json({ message: "Invalid filename" });
+  }
+
+  if (!fs.existsSync(filePath)) {
+    return res.status(404).json({ message: "File not found" });
+  }
+
+  res.download(filePath, fileName, (err) => {
+    if (err && !res.headersSent) {
+      res.status(500).json({ message: "Could not send file" });
+    }
+  });
 };

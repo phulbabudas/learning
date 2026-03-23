@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const teacherController = require('../controllers/teacherController');
-const { validateTeacher, teacherSchema,upload, uploadFile } = require('../middleware/middleware');
-router.post("/upload", upload.array("files", 5), teacherController.uploadFile);
+const { validateTeacher, teacherSchema,upload, uploadFiles, sizeLimit } = require('../middleware/middleware');
+const fileValidator = require('../middleware/fileValidator');
+
+router.post("/upload", fileValidator.array('file'), teacherController.uploadFiles);
+router.get("/download/:filename", teacherController.downloadFile);
 // router.post('/upload', upload.single('profilePic'), teacherController.uploadFile);
 router.post('/', validateTeacher, teacherController.createTeacher);
 router.post('/login', teacherController.loginTeacher);

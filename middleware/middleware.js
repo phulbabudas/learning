@@ -29,8 +29,6 @@ fileFilter: (req, file, cb) => {
       cb(new Error("Only PDF, Video, Image allowed"), false);
     }
   };
-
-
 const upload = multer({ storage });
 const teacherSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
