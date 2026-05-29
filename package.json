@@ -1,0 +1,23 @@
+{
+  "name": "call-transcript-ai",
+  "version": "1.0.0",
+  "description": "AI-powered call transcript generation and summarization using OpenAI API",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "generate": "node index.js"
+  },
+  "keywords": [
+    "openai",
+    "transcript",
+    "ai",
+    "summarization"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "openai": "^6.39.0"
+  }
+}
