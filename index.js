@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // index.js — Main Entry Point
 // Call Transcript Generation & Summarization using OpenAI API
 // Assignment: Developer Task — Node.js + OpenAI SDK v4+
@@ -168,3 +169,31 @@ function handleError(error) {
 // ─── Run ────────────────────────────────────────────────────────────────────
 main();
 
+=======
+const express = require('express')
+const users = require("./MOCK_DATA.json")
+
+const app = express()
+const PORT = 2000;
+
+//Routes
+app.get("/api/users",(req, res)=>{
+return res.json(users);
+});
+
+app.get("/usres",(req,res) =>{
+  const html =`
+  <ul>
+  ${users.map(user =>`<li>${user.first_name}</li>`).join("") 
+
+  }
+    
+    </ul>
+
+  `
+res.send(html);
+
+})
+
+app.listen(PORT,() => console.log(`server Started at PORT:${PORT}`))
+>>>>>>> 2ce6ce6cd30b7a3d832f429917246091c035910b

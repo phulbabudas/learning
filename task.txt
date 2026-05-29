@@ -1,0 +1,13 @@
+REST API -JSON 
+Get/user-HTML Document reder
+GET /api/users/-List all users -done
+
+GET /api/users/1 -Get the user with ID 1
+GET /api/users/2 -Get the user with ID 2
+
+POST /api/user -Creat new user 
+Dynamic path parameters
+Get /api/user/:ID
+get /api/usrer/:id
+PATCH /api/users/1 -Edit the user with ID 1 
+DELETE /api/user/1 -Delete the user with ID 1
